@@ -23,12 +23,15 @@ class _ProductsGridScreenState extends State<ProductsGridScreen> {
   }
 
   void _addProduct(Product product) {
-    products.add(product);
+    setState(() {
+      products.add(product);
+    });
   }
 
   void _showAddProductModal(BuildContext context) {
     showModalBottomSheet(
       useSafeArea: true,
+      isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
         return AddProductModal(
@@ -51,20 +54,18 @@ class _ProductsGridScreenState extends State<ProductsGridScreen> {
               Icons.logout,
             ),
             onPressed: () {
-              Navigator.pushAndRemoveUntil(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const LandingPage()),
-                (route) => false,
               );
             },
           ),
         ],
         leading: IconButton(
           onPressed: () {
-            Navigator.pushAndRemoveUntil(
+            Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const CartScreen()),
-              (route) => false,
             );
           },
           icon: const Icon(Icons.shopping_cart),
